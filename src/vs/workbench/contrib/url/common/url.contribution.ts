@@ -51,8 +51,7 @@ Registry.as<IWorkbenchActionRegistry>(ActionExtensions.WorkbenchActions).registe
 );
 
 const DEAFULT_TRUSTED_DOMAINS = [
-	'https://code.visualstudio.com',
-	'https://go.microsoft.com'
+	'https://code.visualstudio.com'
 ];
 
 const configureTrustedDomainsHandler = async (
@@ -170,6 +169,10 @@ class OpenerValidatorContributions implements IWorkbenchContribution {
 		} catch (err) { }
 
 		const domainToOpen = `${scheme}://${authority}`;
+
+		if (resource.toString(true) === this._productService.welcomePage) {
+			return true;
+		}
 
 		if (isDomainTrusted(domainToOpen, trustedDomains)) {
 			return true;
